@@ -1,4 +1,5 @@
 import connectDB  from "@/lib/db";
+import { Profile } from "@/models/profiles.model";
 import { User } from "@/models/users.model";
 import bcrypt from "bcrypt";
 import { NextResponse } from "next/server";
@@ -22,11 +23,17 @@ export async function POST(req: Request) {
     } 
     else {
       const hashedPassword = await bcrypt.hash(password, 15);
-      await User.create({
+      const user = await User.create({
         name,
         email,
         password: hashedPassword,
       });
+      await Profile.create({
+        userId: user._id,
+        name,
+        email,
+        photo: `https://gravatar.com/avatar/${name}?s=400&d=robohash&r=x`
+      })
     }
 
     return NextResponse.json(

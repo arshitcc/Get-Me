@@ -46,7 +46,6 @@ const profileSchema = new mongoose.Schema<IProfile>(
     },
     description: {
       type: String,
-      required: true,
       maxlength: 200,
     },
     address: {
