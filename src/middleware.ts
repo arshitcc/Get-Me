@@ -13,12 +13,7 @@ export default async function middleware(req: NextRequest) {
 
   if (
     !token &&
-    (pathname.startsWith("/profile") ||
-      pathname.startsWith("/blog/new") ||
-      pathname.startsWith("/blog/edit") ||
-      pathname.startsWith("/api/u") ||
-      pathname.startsWith("/api/b") ||
-      pathname.startsWith("/b")) 
+    (pathname.startsWith("/profile") || pathname.startsWith("/api"))
   ) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
@@ -26,16 +21,5 @@ export default async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    "/login",
-    "/signup",
-    "/",
-    "/verify/:path*",
-    "/profile",
-    "/api/:path*",
-    "/blog/new",
-    "/blog/edit/:path*",
-    "/b/:path*",
-    "/u/:path*",
-  ],
+  matcher: ["/login", "/signup", "/", "/profile", "/api/:path*"],
 };
