@@ -148,7 +148,7 @@ export default function LoginForm() {
         </Form>
       </CardContent>
       <CardFooter className="flex flex-col">
-          <p className="mt-2 text-xs text-center text-gray-700">
+          <p className="mt-2 text-xs text-center text-white">
             Not a member?{" "}
             <Link href="/signup" className="text-blue-600 hover:underline">
               Sign up

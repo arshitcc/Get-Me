@@ -150,7 +150,7 @@ export default function SignupForm() {
         </Form>
       </CardContent>
       <CardFooter className="flex flex-col">
-        <p className="text-xs text-center text-gray-700">
+        <p className="text-xs text-center text-white">
           Already a member?{" "}
           <Link href="/login" className="text-blue-600 hover:underline">
             Log in
