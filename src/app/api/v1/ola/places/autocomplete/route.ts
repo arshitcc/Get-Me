@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/db";
 import axios from "axios";
 
-export async function GET(req: NextRequest) {
+export async function POST(req: NextRequest) {
   try {
     await connectDB();
 
@@ -20,7 +20,7 @@ export async function GET(req: NextRequest) {
     }
 
     const response = await axios.get(
-      `https://api.olamaps.io/places/v1/autocomplete?location=${location.latitue},${location.longitude}&input=${searchText}&api_key=${process.env.OLAMAPS_API_KEY}`
+      `https://api.olamaps.io/places/v1/autocomplete?location=${location.lat},${location.lng}&input=${searchText}&api_key=${process.env.OLAMAPS_API_KEY}`
     );
 
     if (response.data.error_message.trim()) {

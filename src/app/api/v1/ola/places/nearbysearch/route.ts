@@ -3,13 +3,13 @@ import connectDB from "@/lib/db";
 import axios from "axios";
 
 
-export default async function GET(req: NextRequest) {
+export async function POST(req: NextRequest) {
     try {
         await connectDB();
 
         const {location, types} = await req.json();
 
-        if(!location.latitue.trim() || !location.longitude.trim()) {
+        if(!location.lat || !location.lng) {
             return NextResponse.json(
                 {
                     success: false,
@@ -21,7 +21,7 @@ export default async function GET(req: NextRequest) {
             );
         }
 
-        const mylocation = location.latitude + "," + location.longitude;
+        const mylocation = location.lat + "," + location.lng;
 
         const response = await axios.get(`https://api.olamaps.io/places/v1/nearbysearch/advanced?layers=venue&types=${types || ""}&location=${mylocation}&api_key=${process.env.OLAMAPS_API_KEY}`);
 
