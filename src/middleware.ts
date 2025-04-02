@@ -13,7 +13,7 @@ export default async function middleware(req: NextRequest) {
 
   if (
     !token &&
-    (pathname.startsWith("/profile") || pathname.startsWith("/api"))
+    (pathname.startsWith("/profile") || pathname.startsWith("/api/:path*"))
   ) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
