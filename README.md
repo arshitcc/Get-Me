@@ -55,23 +55,22 @@ The form allows users to edit their profile information including description, i
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/yourusername/your-repo-name.git
-   cd your-repo-name
+      git clone https://github.com/arshitcc/Get-Me.git
+      cd your-repo-name
 
 2. **Install the dependencies:**
     ```bash
-    npm install
+       npm install
 3. Set up environment variables:
 
   Create a .env.local file at the root of your project and add the following:
   ```bash
-  MONGODB_URI=your_mongodb_connection_string
-  NEXT_PUBLIC_OLAMAPS_API_KEY=your_olamaps_api_key
-
-```
+     MONGODB_URI=your_mongodb_connection_string
+     NEXT_PUBLIC_OLAMAPS_API_KEY=your_olamaps_api_key
+   ```
 
 4. Run the development server:
 
-```
-npm run dev
+   ```
+   npm run dev
   
