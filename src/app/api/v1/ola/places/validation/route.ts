@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/db";
 import axios from "axios";
 
-export default async function GET(req: NextRequest) {
+export async function GET(req: NextRequest) {
     try {
         await connectDB();
 
