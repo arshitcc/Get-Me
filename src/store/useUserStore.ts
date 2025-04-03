@@ -57,15 +57,11 @@ const userStore: StateCreator<IUserState> = (set) => ({
         set({ isLoading: false });
     }
   },
-  getProfile: async (userId) => {
+  getProfile: async () => {
     set({ isLoading: true, error : "" });
     try {
-      const res = await axios.get(`api/u/${userId}`);
-      if(res.data.success) {
-        set({ profile: res.data.data });
-        return true;
-      }
-      return false;
+      const res = await axios.get(`api/v1/users/profile`);
+      return res.data.data;
     } catch (error : any) {
       set({ error: error.message });
       return false;

@@ -52,5 +52,5 @@ export interface IUserState {
   signup: (data: Omit<SignupSchema, "confirmPassword">) => Promise<boolean>;
   login: (method: loginMethod, data?: LoginSchema) => Promise<boolean>;
   logout: () => Promise<boolean>;
-  getProfile: (userId: string) => Promise<boolean>;
+  getProfile: () => Promise<IProfile>;
 }
