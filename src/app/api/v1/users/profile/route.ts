@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/db";
 import { User } from "@/models/users.model";
 import { getServerSession } from "next-auth";
@@ -64,5 +64,43 @@ export async function GET() {
     } catch (error) {
         console.log(error);
         return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
+    }
+}
+
+export async function PATCH(req : NextRequest) {
+    try {
+        await connectDB();
+        const session = await getServerSession(AuthOptions);
+        if (!session || !session.user._id) {
+            return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+        }
+
+        const user = await User.findOne({ _id: session.user._id });
+        if (!user) {
+            return NextResponse.json({ message: "User not found" }, { status: 404 });
+        }
+
+        const profile = await Profile.findOne({ userId: user._id });
+        if (!profile) {
+            return NextResponse.json({ message: "Profile not found" }, { status: 404 });
+        }
+
+        const data = await req.json();
+
+        const updatedProfile = await Profile.findOneAndUpdate({ userId: user._id }, data, { new: true });
+        if (!updatedProfile) {
+            return NextResponse.json({ success : false, message: "Unable to update profile"}, { status: 500 });
+        }
+
+        return NextResponse.json({ 
+            success: true,
+            message: "Success",
+            error : "",
+            data: updatedProfile,
+         }, { status: 200 });
+
+    } catch (error) {
+        console.log(error);
+        return NextResponse.json({ success:false, message: "Internal Server Error" }, { status: 500 });
     }
 }

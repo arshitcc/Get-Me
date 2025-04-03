@@ -29,6 +29,10 @@ import {
 } from "lucide-react";
 import { useUserStore } from "@/store/useUserStore";
 import { IProfile } from "@/types/user";
+import ProfileSkeleton from "@/components/user/ProfileSkeleton";
+import PlacesSkeleton from "@/components/user/PlacesSkeleton";
+import FriendsSkeleton from "@/components/user/FriendsSkeleton";
+import { useRouter } from "next/navigation";
 
 const favoritePlaces = [
   {
@@ -99,7 +103,7 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
   const [places, setPlaces] = useState<typeof favoritePlaces | null>(null);
   const [friendsList, setFriendsList] = useState<typeof friends | null>(null);
-
+  const router = useRouter();
   const [profile, setProfile] = useState<IProfile | null>(null);
   const { getProfile } = useUserStore();
 
@@ -144,6 +148,7 @@ export default function ProfilePage() {
                     variant="outline"
                     size="icon"
                     className="h-8 w-8 text-sky-600"
+                    onClick={() => router.push("/profile/edit")}
                   >
                     <EditIcon className="h-4 w-4" />
                   </Button>
@@ -288,24 +293,15 @@ export default function ProfilePage() {
               onValueChange={setActiveTab}
             >
               <TabsList className="grid grid-cols-3 mb-4 sm:mb-6 bg-sky-500 w-full cursor-pointer text-white">
-                <TabsTrigger
-                  value="profile"
-                  className="cursor-pointer"
-                >
+                <TabsTrigger value="profile" className="cursor-pointer">
                   <UserIcon className="h-4 w-4 mr-2 hidden sm:inline" />
                   Profile
                 </TabsTrigger>
-                <TabsTrigger
-                  value="places"
-                  className="cursor-pointer"
-                >
+                <TabsTrigger value="places" className="cursor-pointer">
                   <HeartIcon className="h-4 w-4 mr-2 hidden sm:inline" />
                   Favorite Places
                 </TabsTrigger>
-                <TabsTrigger
-                  value="friends"
-                  className="cursor-pointer"
-                >
+                <TabsTrigger value="friends" className="cursor-pointer">
                   <UsersIcon className="h-4 w-4 mr-2 hidden sm:inline" />
                   Friends
                 </TabsTrigger>
@@ -546,103 +542,6 @@ export default function ProfilePage() {
           </div>
         </div>
       </div>
-    </div>
-  );
-}
-
-function ProfileSkeleton() {
-  return (
-    <div className="space-y-6">
-      <div className="space-y-2">
-        <Skeleton className="h-5 w-16" />
-        <Skeleton className="h-4 w-full" />
-        <Skeleton className="h-4 w-3/4" />
-      </div>
-
-      <div className="space-y-2">
-        <Skeleton className="h-5 w-20" />
-        <div className="flex flex-wrap gap-2">
-          <Skeleton className="h-6 w-16" />
-          <Skeleton className="h-6 w-20" />
-          <Skeleton className="h-6 w-14" />
-          <Skeleton className="h-6 w-18" />
-        </div>
-      </div>
-
-      <div className="space-y-2">
-        <Skeleton className="h-5 w-24" />
-        <Skeleton className="h-4 w-full" />
-        <Skeleton className="h-4 w-2/3" />
-        <Skeleton className="h-4 w-1/2" />
-      </div>
-
-      <div className="space-y-2">
-        <Skeleton className="h-5 w-24" />
-        <div className="space-y-2">
-          <Skeleton className="h-4 w-full" />
-          <Skeleton className="h-4 w-full" />
-          <Skeleton className="h-4 w-full" />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function PlacesSkeleton() {
-  return (
-    <div className="space-y-4 sm:space-y-6">
-      {[1, 2, 3].map((i) => (
-        <Card key={i} className="border-sky-100 bg-white">
-          <CardHeader className="pb-2 px-4 sm:px-6">
-            <Skeleton className="h-6 w-40 sm:w-60" />
-            <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
-              <Skeleton className="h-4 w-24" />
-              <Skeleton className="h-4 w-36" />
-            </div>
-          </CardHeader>
-          <CardContent className="px-4 sm:px-6">
-            <Skeleton className="h-4 w-full" />
-            <Skeleton className="h-4 w-5/6 mt-2" />
-          </CardContent>
-        </Card>
-      ))}
-    </div>
-  );
-}
-
-function FriendsSkeleton() {
-  return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      {[1, 2, 3, 4].map((i) => (
-        <Card key={i} className="border-sky-100 bg-white">
-          <CardHeader className="pb-2 px-4">
-            <div className="flex items-start gap-4">
-              <Skeleton className="h-10 w-10 sm:h-12 sm:w-12 rounded-full" />
-              <div className="space-y-2 flex-1">
-                <Skeleton className="h-5 w-24 sm:w-32" />
-                <Skeleton className="h-3 w-full" />
-              </div>
-            </div>
-          </CardHeader>
-          <CardContent className="pb-2 px-4">
-            <div className="space-y-2">
-              <Skeleton className="h-4 w-16" />
-              <div className="flex flex-wrap gap-1">
-                <Skeleton className="h-5 w-14" />
-                <Skeleton className="h-5 w-16" />
-                <Skeleton className="h-5 w-12" />
-              </div>
-            </div>
-          </CardContent>
-          <CardFooter className="pt-0 px-4">
-            <div className="flex space-x-2">
-              <Skeleton className="h-7 w-7 rounded-md" />
-              <Skeleton className="h-7 w-7 rounded-md" />
-              <Skeleton className="h-7 w-7 rounded-md" />
-            </div>
-          </CardFooter>
-        </Card>
-      ))}
     </div>
   );
 }

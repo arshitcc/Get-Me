@@ -49,16 +49,14 @@ const profileSchema = new mongoose.Schema<IProfile>(
       maxlength: 200,
     },
     address: {
-      type: {
-        street: { type: String, required: true },
-        city: { type: String, required: true },
-        state: { type: String, required: true },
-        country: { type: String, required: true, default: "India" },
-        postalCode: { type: String, required: true },
-        coordinates: {
-          lat: { type: Number },
-          lng: { type: Number },
-        },
+      street: { type: String, required: true },
+      city: { type: String, required: true },
+      state: { type: String, required: true },
+      country: { type: String, required: true, default: "India" },
+      postalCode: { type: String, required: true },
+      coordinates: {
+        lat: { type: Number },
+        lng: { type: Number },
       },
     },
     interests: [{ type: String }],
