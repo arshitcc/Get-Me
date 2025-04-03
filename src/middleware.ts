@@ -13,7 +13,7 @@ export default async function middleware(req: NextRequest) {
 
   if (
     !token &&
-    (pathname.startsWith("/profile") || pathname.startsWith("/api/:path*"))
+    (pathname.startsWith("/profile") || pathname.startsWith('/home') || pathname.startsWith("/api/:path*"))
   ) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
@@ -21,5 +21,5 @@ export default async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/login", "/signup", "/", "/profile", "/api/:path*"],
+  matcher: ["/login", "/signup", "/home", "/profile", "/api/:path*"],
 };

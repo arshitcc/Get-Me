@@ -112,16 +112,14 @@ export default function ProfilePage() {
     fetchProfile();
   }, []);
 
-  // Simulate data loading
   useEffect(() => {
-    const loadData = async () => {
-      // Simulate API calls with different loading times
+    const getData = async () => {
       setTimeout(() => setPlaces(favoritePlaces), 1800);
       setTimeout(() => setFriendsList(friends), 2200);
       setTimeout(() => setLoading(false), 2500);
     };
 
-    loadData();
+    getData();
   }, []);
 
   return (
@@ -129,7 +127,7 @@ export default function ProfilePage() {
       <div className="container mx-auto py-4 sm:py-6 lg:py-8 px-4">
         <div className="flex flex-col lg:flex-row gap-4 sm:gap-6">
           <div className="w-full lg:w-1/3">
-            <Card className="shadow-md border-sky-100">
+            <Card className="shadow-md border-sky-100 bg-white">
               <CardHeader className="pb-2">
                 <div className="flex justify-between items-start">
                   {loading ? (
@@ -157,7 +155,7 @@ export default function ProfilePage() {
                   </div>
                 ) : (
                   <>
-                    <CardTitle className="text-xl sm:text-2xl mt-4">
+                    <CardTitle className="text-xl sm:text-2xl mt-4 text-black">
                       {profile?.name}
                     </CardTitle>
                     <CardDescription className="text-sm">
@@ -170,7 +168,7 @@ export default function ProfilePage() {
                 <div className="space-y-4">
                   {loading ? (
                     <>
-                      <div className="space-y-2">
+                      <div className="space-y-2 bg-white">
                         <Skeleton className="h-5 w-24" />
                         <div className="flex flex-wrap gap-2">
                           <Skeleton className="h-6 w-16" />
@@ -179,11 +177,11 @@ export default function ProfilePage() {
                           <Skeleton className="h-6 w-18" />
                         </div>
                       </div>
-                      <div className="space-y-2">
+                      <div className="space-y-2 bg-white">
                         <Skeleton className="h-5 w-24" />
                         <Skeleton className="h-5 w-full" />
                       </div>
-                      <div className="space-y-2">
+                      <div className="space-y-2 bg-white">
                         <Skeleton className="h-5 w-24" />
                         <div className="flex space-x-2">
                           <Skeleton className="h-8 w-8 rounded-md" />
@@ -191,7 +189,7 @@ export default function ProfilePage() {
                           <Skeleton className="h-8 w-8 rounded-md" />
                         </div>
                       </div>
-                      <div className="space-y-2">
+                      <div className="space-y-2 bg-white">
                         <Skeleton className="h-5 w-24" />
                         <Skeleton className="h-5 w-40" />
                       </div>
@@ -289,24 +287,24 @@ export default function ProfilePage() {
               className="w-full"
               onValueChange={setActiveTab}
             >
-              <TabsList className="grid grid-cols-3 mb-4 sm:mb-6 bg-sky-500 w-full cursor-pointer">
+              <TabsList className="grid grid-cols-3 mb-4 sm:mb-6 bg-sky-500 w-full cursor-pointer text-white">
                 <TabsTrigger
                   value="profile"
-                  className="data-[state=active]:bg-sky-200 data-[state=active]:text-sky-800 cursor-pointer"
+                  className="cursor-pointer"
                 >
                   <UserIcon className="h-4 w-4 mr-2 hidden sm:inline" />
                   Profile
                 </TabsTrigger>
                 <TabsTrigger
                   value="places"
-                  className="data-[state=active]:bg-sky-200 data-[state=active]:text-sky-800 cursor-pointer"
+                  className="cursor-pointer"
                 >
                   <HeartIcon className="h-4 w-4 mr-2 hidden sm:inline" />
                   Favorite Places
                 </TabsTrigger>
                 <TabsTrigger
                   value="friends"
-                  className="data-[state=active]:bg-sky-200 data-[state=active]:text-sky-800 cursor-pointer"
+                  className="cursor-pointer"
                 >
                   <UsersIcon className="h-4 w-4 mr-2 hidden sm:inline" />
                   Friends
@@ -325,43 +323,50 @@ export default function ProfilePage() {
                       <ProfileSkeleton />
                     ) : (
                       <div className="space-y-6">
-                        <div>
-                          <h3 className="font-medium text-sky-800 mb-2">Bio</h3>
-                          <p className="text-muted-foreground">
-                            {profile?.description}
-                          </p>
-                        </div>
-
-                        <div>
-                          <h3 className="font-medium text-sky-800 mb-2">
-                            Interests
-                          </h3>
-                          <div className="flex flex-wrap gap-2">
-                            {profile?.interests?.map((interest, index) => (
-                              <Badge
-                                key={index}
-                                className="bg-sky-100 text-sky-800 hover:bg-sky-200"
-                              >
-                                {interest}
-                              </Badge>
-                            ))}
-                          </div>
-                        </div>
-
-                        <div>
-                          <h3 className="font-medium text-sky-800 mb-2">
-                            Full Address
-                          </h3>
-                          <div className="text-muted-foreground">
-                            <p>{profile?.address?.street}</p>
-                            <p>
-                              {profile?.address?.city},{" "}
-                              {profile?.address?.state}{" "}
-                              {profile?.address?.postalCode}
+                        {profile?.description && (
+                          <div>
+                            <h3 className="font-medium text-sky-800 mb-2">
+                              Bio
+                            </h3>
+                            <p className="text-muted-foreground">
+                              {profile?.description}
                             </p>
-                            <p>{profile?.address?.country}</p>
                           </div>
-                        </div>
+                        )}
+
+                        {profile?.interests && profile.interests.length > 0 && (
+                          <div>
+                            <h3 className="font-medium text-sky-800 mb-2">
+                              Interests
+                            </h3>
+                            <div className="flex flex-wrap gap-2">
+                              {profile?.interests?.map((interest, index) => (
+                                <Badge
+                                  key={index}
+                                  className="bg-sky-100 text-sky-800 hover:bg-sky-200"
+                                >
+                                  {interest}
+                                </Badge>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {profile?.address && (
+                          <div>
+                            <h3 className="font-medium text-sky-800 mb-2">
+                              Full Address
+                            </h3>
+                            <div className="text-muted-foreground">
+                              <p>{profile.address.street}</p>
+                              <p>
+                                {profile.address.city}, {profile.address.state}{" "}
+                                {profile.address.postalCode}
+                              </p>
+                              <p>{profile.address.country}</p>
+                            </div>
+                          </div>
+                        )}
 
                         <div>
                           <h3 className="font-medium text-sky-800 mb-2">
@@ -371,19 +376,17 @@ export default function ProfilePage() {
                             <div className="flex items-center">
                               <LinkedinIcon className="h-4 w-4 mr-2 text-sky-600 flex-shrink-0" />
                               <span className="truncate">
-                                linkedin.com/in/janecooper
+                                linkedin.com/in/arshitcc
                               </span>
                             </div>
                             <div className="flex items-center">
                               <TwitterIcon className="h-4 w-4 mr-2 text-sky-600 flex-shrink-0" />
-                              <span className="truncate">
-                                twitter.com/janecooper
-                              </span>
+                              <span className="truncate">x.com/arshitcc</span>
                             </div>
                             <div className="flex items-center">
                               <FacebookIcon className="h-4 w-4 mr-2 text-sky-600 flex-shrink-0" />
                               <span className="truncate">
-                                facebook.com/janecooper
+                                facebook.com/arshitcc
                               </span>
                             </div>
                           </div>
@@ -547,7 +550,6 @@ export default function ProfilePage() {
   );
 }
 
-// Skeleton components for loading states
 function ProfileSkeleton() {
   return (
     <div className="space-y-6">
@@ -590,7 +592,7 @@ function PlacesSkeleton() {
   return (
     <div className="space-y-4 sm:space-y-6">
       {[1, 2, 3].map((i) => (
-        <Card key={i} className="border-sky-100">
+        <Card key={i} className="border-sky-100 bg-white">
           <CardHeader className="pb-2 px-4 sm:px-6">
             <Skeleton className="h-6 w-40 sm:w-60" />
             <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
@@ -612,7 +614,7 @@ function FriendsSkeleton() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       {[1, 2, 3, 4].map((i) => (
-        <Card key={i} className="border-sky-100">
+        <Card key={i} className="border-sky-100 bg-white">
           <CardHeader className="pb-2 px-4">
             <div className="flex items-start gap-4">
               <Skeleton className="h-10 w-10 sm:h-12 sm:w-12 rounded-full" />

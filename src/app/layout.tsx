@@ -4,6 +4,8 @@ import { Toaster } from "@/components/ui/sonner"
 import AuthProvider from "@/lib/AuthProvider";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
+import Navbar from "@/components/auth/Navbar";
+import { useSession } from "next-auth/react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,6 +34,7 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <ThemeProvider attribute={"class"} defaultTheme="dark" enableSystem disableTransitionOnChange>
+            <Navbar userName="Arshit Chaurasia"/>
             {children}
             <Toaster/>
           </ThemeProvider>
